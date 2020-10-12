@@ -1,5 +1,6 @@
 package jpabook.jpashop.repository;
 
+import jpabook.jpashop.api.OrderSimpleApiController;
 import jpabook.jpashop.domain.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,22 @@ public class OrderRepository {
                 .setParameter("status", orderSearch.getOrderStatus())
                 .setParameter("name", orderSearch.getMemberName())
                 .setMaxResults(1000) //최대 1000건
+                .getResultList();
+    }
+
+    public List<Order> findAllWithMemberDelivery() {
+       return em.createQuery(
+                "select o from Order o"+
+                        "join fetch o.member m"+
+                        "join fetch o.delivery d", Order.class
+        ).getResultList();
+    }
+
+    public List<OrderSimpleQueryDto> findOrderDtos() {
+        return em.createQuery(
+                "select "+
+                        "join o.member m"+
+                        "join o.delivery d", OrderSimpleQueryDto.class)
                 .getResultList();
     }
 }
