@@ -12,6 +12,8 @@ spring:
       hibernate:
 #        show_sql: true
         format_sql: true
+        default_batch_fetch_size: 100
+#       쿼리 호출 수를 1+N -> 1+1로 최적화 해준다
 
 logging:
   level:
