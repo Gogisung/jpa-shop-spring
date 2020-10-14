@@ -29,28 +29,28 @@ public class OrderSimpleApiController {
     private final OrderRepository orderRepository;
     private final OrderSimpleQueryRepository orderSimpleQueryRepository;
 
-    @GetMapping("/api/v1/simple-orders")
-    public List<Order> ordersV1() {
-        List<Order> all = orderRepository.findAll(new OrderSearch());
-        for (Order order : all) {
-            order.getMember().getName(); // Lazy 강제 초기화
-            order.getDelivery().getAddress(); //Lazy 강제 초기화
-        }
-        return all;
-    }
-
-    @GetMapping("/api/v2/simple-orders")
-    public List<SimpleOrderDto> ordersV2() {
-    //ORDER 2개
-    //N + 1-> 1 + 회원 N + 배송 N
-        List<Order> orders = orderRepository.findAll(new OrderSearch());
-
-        List<SimpleOrderDto> result = orders.stream()
-                .map(o -> new SimpleOrderDto(o))
-                .collect(Collectors.toList());
-
-        return result;
-    }
+//    @GetMapping("/api/v1/simple-orders")
+//    public List<Order> ordersV1() {
+//        List<Order> all = orderRepository.findAll(new OrderSearch());
+//        for (Order order : all) {
+//            order.getMember().getName(); // Lazy 강제 초기화
+//            order.getDelivery().getAddress(); //Lazy 강제 초기화
+//        }
+//        return all;
+//    }
+//
+//    @GetMapping("/api/v2/simple-orders")
+//    public List<SimpleOrderDto> ordersV2() {
+//    //ORDER 2개
+//    //N + 1-> 1 + 회원 N + 배송 N
+//        List<Order> orders = orderRepository.findAll(new OrderSearch());
+//
+//        List<SimpleOrderDto> result = orders.stream()
+//                .map(o -> new SimpleOrderDto(o))
+//                .collect(Collectors.toList());
+//
+//        return result;
+//    }
 
     @GetMapping("/api/v3/simple-orders")
     public List<SimpleOrderDto> ordersV3() {
